@@ -6,6 +6,8 @@ from rest_framework.views import Response, APIView
 
 from .models import Transaction
 from django.db.models import Sum, Count
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class DealsView(APIView):
@@ -27,14 +29,24 @@ class DealsView(APIView):
                             total=row['total'],
                             quantity=row['quantity'],
                             date=row['date']).exists():
-                        return Response('This data is already in the database', status=status.HTTP_400_BAD_REQUEST)
+                        return Response(
+                            'This data is already in the database',
+                            status=status.HTTP_400_BAD_REQUEST
+                        )
                     else:
                         data.save()
 
-                return Response('Record added to database', status=status.HTTP_200_OK)
+                return Response(
+                    'Record added to database',
+                    status=status.HTTP_200_OK
+                )
         except Exception as e:
-            return Response({'Status': 'Error', 'Desc': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'Status': 'Error', 'Desc': str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
+    @method_decorator(cache_page(60 * 60 * 2))
     def get(self, request):
         top_customers = Transaction.objects.values(
             'customer'

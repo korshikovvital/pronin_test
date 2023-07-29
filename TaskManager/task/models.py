@@ -12,10 +12,5 @@ class Transaction(models.Model):
         verbose_name = 'Транзакция'
         verbose_name_plural = 'Транзакции'
 
-
-
     def __str__(self):
         return f"{self.customer} - {self.item} - {self.total}"
-
-
-
