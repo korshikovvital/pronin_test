@@ -23,6 +23,7 @@ ___
 
 ```python manage.py collectstatic --noinput ```
 
+Перейти на http://localhost/
 
 
 ## Автор проекта - Коршиков Виталий 
