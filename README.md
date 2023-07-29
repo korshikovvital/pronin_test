@@ -16,6 +16,13 @@ ___
 
 ```docker-compose up ```
 
+в контейнере web сделать миграции и собрать статику
+
+
+```python manage.py migrate```
+
+```python manage.py collectstatic --noinput ```
+
 
 
 ## Автор проекта - Коршиков Виталий 
